@@ -251,9 +251,7 @@
 								<!-- 分页 -->
 								<script type="text/javascript">
 									function page(pageNum) {
-									window.location.href = "<%=basePath%>
-									article/show/${article.id}?pageNum="
-												+ pageNum
+									window.location.href = "<%=basePath%>article/show/${article.id}?pageNum=" + pageNum
 									}
 								</script>
 								<jsp:include page="../public/page.jsp" /></div>
