@@ -1,0 +1,33 @@
+
+.article_title_show{
+	font-size: 25px;
+}
+.separator{
+	-webkit-box-direction: normal; 
+	background-color: #dcdfe6; 
+	position: relative; 
+	display: block; 
+	height: 1px; 
+	width: 100%; 
+	margin: 24px 0;
+}
+.text_in_separator{
+	font-weight: 500; 
+	font-size: 14px;
+	position: absolute; 
+	background-color: #fff; 
+	padding: 0 20px; 
+	color: #303133; 
+	left: 20px; 
+	transform: translateY(-50%);
+}
+.text_in_separator  .diliver{
+	background-color: #dcdfe6;
+	display: inline-block;
+	width: 1px;
+	height: 1em;
+	margin: 0 8px;
+	vertical-align: middle;
+	position: relative;
+}
+.footer{height:50px;position:fixed;bottom:0px;left:0px;}

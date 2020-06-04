@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.morebug.blog.dao.MyArticleMapper">
+	<cache  eviction="FIFO"  flushInterval="60000"  size="512"  readOnly="true"/>
+
+	<select id="paging_query" resultType="cn.morebug.blog.bean.ArticleVo">
+	 	select a.id,a.title,a.type_id,t.name type_name,a.author_id,u.username author_username,a.status,a.createDate,a.updateDate,a.publishDate,a.checker_id 
+	 	from db_articles a ,db_types t,db_users u 
+	 	where  a.author_id = u.id and a.type_id = t.id and a.author_id = #{author_id}
+	 	<if test="possible_title != null">
+	 		and a.title like #{possible_title}
+	 	</if>
+	 	<if test="type_id != null">
+	 		and a.type_id = #{type_id}
+	 	</if>
+	</select>
+	
+	<delete id="deleteArticle">
+		delete from db_articles where id = #{id}
+	</delete>
+	
+</mapper>

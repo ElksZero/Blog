@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.morebug.blog.dao.ArticleTypeMapper">
+	<cache  eviction="FIFO"  flushInterval="60000"  size="512"  readOnly="true"/>
+
+	<select id="paging_query" resultType="cn.morebug.blog.bean.ArticleTypeDo">
+		select * from db_types 
+		<!-- bind:绑定 -->
+		
+		<if test="possible_names != null">
+			<where>
+				<bind name="likename" value="'%'+_parameter+'%'"/>
+				name like #{likename}
+			</where>
+		</if>
+	</select>
+	
+	<select id="getArticleTypeDoByName" resultType="cn.morebug.blog.bean.ArticleTypeDo">
+		select * from db_types where name = #{name}
+	</select>
+	
+	<insert id="addType">
+		insert into db_types(name,describe) values(#{name},#{describe}) 
+	</insert>
+	
+	<select id="getArticleTypeById" resultType="cn.morebug.blog.bean.ArticleTypeDo">
+		select * from db_types where id = #{id}
+	</select>
+	
+	<update id="updateType">
+		update db_types set name = #{name},describe = #{describe} where id = #{id}
+	</update>
+	
+	<delete id="deleteType">
+		delete from db_types where id = #{id}
+	</delete>
+	
+	<select id="getAll" resultType="cn.morebug.blog.bean.ArticleTypeDo">
+		select * from db_types
+	</select>
+</mapper>

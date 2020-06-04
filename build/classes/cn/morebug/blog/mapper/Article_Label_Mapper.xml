@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.morebug.blog.dao.Article_Label_Mapper">
+	<cache  eviction="FIFO"  flushInterval="60000"  size="512"  readOnly="true"/>
+
+	<insert id="add_relation">
+		insert into db_article_label (article_id,label_id) values(#{article_id},#{label_id})
+	</insert>
+	<delete id="delete_relation">
+		delete from db_article_label where article_id = #{article_id}
+	</delete>
+	<select id="get_relation" resultType="java.lang.String">
+		select l.name from db_article_label al,db_labels l where al.label_id = l.id and al.article_id = #{article_id}
+	</select>
+</mapper>

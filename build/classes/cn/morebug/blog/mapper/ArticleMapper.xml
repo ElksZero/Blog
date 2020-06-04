@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.morebug.blog.dao.ArticleMapper">
+	<cache  eviction="FIFO"  flushInterval="60000"  size="512"  readOnly="true"/>
+
+	<insert id="submitArticle">
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+			<!-- SELECT @@IDENTITY：得到刚insert到数据表中的记录的主键值，只适用于自增主键 -->
+			SELECT @@IDENTITY
+		</selectKey>
+		insert into db_articles(title,type_id,author_id,status,content,createDate,updateDate,publishDate,checker_id)
+		values(#{title},#{type_id},#{author_id},#{status},#{content},#{createDate},#{updateDate},#{publishDate},#{checker_id})
+	</insert>
+	<update id="updateArticle">
+		update db_articles set updateDate = #{updateDate},status = #{status},title = #{title} ,type_id = #{type_id},content = #{content} where id = #{id}
+	</update>
+	
+	<select id="getArticleVoById" resultType="cn.morebug.blog.bean.ArticleVo">
+		select a.id,a.title,a.type_id,t.name type_name,a.author_id,u.username author_username,a.status,a.content,a.createDate,a.updateDate,a.publishDate,a.checker_id 
+	 	from db_articles a ,db_types t,db_users u
+	 	where  a.author_id = u.id and a.type_id = t.id and a.id = #{id}
+	</select>
+	<select id="getArticleDoById" resultType="cn.morebug.blog.bean.ArticleDo">
+		select * from db_articles where id = #{id}
+	</select>
+	
+	<select id="paging_query" resultType="cn.morebug.blog.bean.ArticleVo">
+		select a.id,a.title,a.type_id,t.name type_name,a.author_id,u.username author_username,a.status,a.createDate,a.updateDate,a.publishDate,a.checker_id 
+	 	from db_articles a ,db_types t,db_users u 
+	 	where  a.author_id = u.id and a.type_id = t.id and status = 2
+	 	<if test="possible_title != null">
+	 		and a.title like #{possible_title}
+	 	</if>
+	 	<if test="type_id != null">
+	 		and a.type_id = #{type_id}
+	 	</if>
+	 	<if test="author_name != null">
+	 		and u.username like #{author_name}
+	 	</if>
+	</select>
+	
+	<select id="paging_queryAll" resultType="cn.morebug.blog.bean.ArticleVo">
+		select a.id,a.title,a.type_id,t.name type_name,a.author_id,u.username author_username,a.status,a.createDate,a.updateDate,a.publishDate,a.checker_id 
+	 	from db_articles a ,db_types t,db_users u 
+	 	where  a.author_id = u.id and a.type_id = t.id
+	 	<if test="possible_title != null">
+	 		and a.title like #{possible_title}
+	 	</if>
+	 	<if test="type_id != null">
+	 		and a.type_id = #{type_id}
+	 	</if>
+	 	<if test="author_name != null">
+	 		and u.username like #{author_name}
+	 	</if>
+	</select>
+	
+	<update id="publishArticle">
+		update db_articles set status=2,checker_id = #{checker_id},publishDate = #{publishDate} where id = #{id}
+	</update>
+	<update id="revokeArticle">
+		update db_articles set status=1,checker_id = #{checker_id} where id = #{id}
+	</update>
+</mapper>

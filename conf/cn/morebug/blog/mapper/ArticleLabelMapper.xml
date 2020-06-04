@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.morebug.blog.dao.ArticleLabelMapper">
+	<cache  eviction="FIFO"  flushInterval="60000"  size="512"  readOnly="true"/>
+
+	<select id="paging_query" resultType="cn.morebug.blog.bean.ArticleLabelDo">
+		select * from db_labels
+		<!-- bind:绑定 -->
+		
+		<if test="possible_names != null">
+			<where>
+				<bind name="likename" value="'%'+_parameter+'%'"/>
+				name like #{likename}
+			</where>
+		</if>
+	</select>
+	<insert id="addLabel">
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+			<!-- SELECT @@IDENTITY：得到刚insert到数据表中的记录的主键值，只适用于自增主键 -->
+			SELECT @@IDENTITY
+		</selectKey>
+		insert into db_labels (name) values(#{name})
+	</insert>
+	<select id="getLabelByName" resultType="cn.morebug.blog.bean.ArticleLabelDo">
+		select * from db_labels where name = #{name}
+	</select>
+	
+	<select id="getLabelById" resultType="cn.morebug.blog.bean.ArticleLabelDo">
+		select * from db_labels where id = #{id}
+	</select>
+	
+	<update id="updateLabel">
+		update db_labels set name = #{name} where id = #{id}
+	</update>
+	
+	<delete id="deleteLabel">
+		delete from db_labels where id = #{id}
+	</delete>
+</mapper>

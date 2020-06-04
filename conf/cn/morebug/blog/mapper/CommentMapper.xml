@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.morebug.blog.dao.CommentMapper">
+	<cache  eviction="FIFO"  flushInterval="60000"  size="512"  readOnly="true"/>
+
+	<insert id="submitComment">
+		insert into db_comments (article_id,commenter_id,content,status,submitDate) values(#{article_id},#{commenter_id},#{content},#{status},#{submitDate})
+	</insert>
+	
+	<select id="paging_query" resultType="cn.morebug.blog.bean.CommentVo">
+		select c.id ,a.title article_title,u.username commenter_username,c.status 
+		from db_comments c,db_articles a,db_users u 
+		where c.article_id = a.id and c.commenter_id = u.id
+		<if test="possible_title != null">
+	 		and a.title like #{possible_title}
+	 	</if>
+	 	<if test="possible_commenter != null">
+	 		and u.username like #{possible_commenter}
+	 	</if>
+	</select>
+	
+	<select id="getCommentById" resultType="cn.morebug.blog.bean.CommentVo">
+		select c.* ,a.title article_title,u.username commenter_username,c.status 
+		from db_comments c,db_articles a,db_users u 
+		where c.article_id = a.id and c.commenter_id = u.id and c.id = #{id}
+	</select>
+	
+	<update id="publishComment">
+		update db_comments set status = 1,publishDate = #{publishDate},checker_id = #{checker_id} where id = #{id}
+	</update>
+	<update id="revokeComment">
+		update db_comments set status = 0 where id = #{id}
+	</update>
+	<delete id="deleteComment">
+		delete from db_comments where id = #{id}
+	</delete>
+	<delete id="deleteCommentByArticleId">
+		delete from db_comments where article_id = #{article_id}
+	</delete>
+	<select id="paging_queryForArticle" resultType="cn.morebug.blog.bean.CommentVo">
+		select c.* ,a.title article_title,u.username commenter_username
+		from db_comments c,db_articles a,db_users u 
+		where c.article_id = a.id and c.commenter_id = u.id and c.status = 1 and c.article_id = #{article_id} order by c.submitDate desc
+	</select>
+</mapper>
