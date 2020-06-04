@@ -80,9 +80,9 @@ CREATE TABLE db_comments(
 
 
 
-insert into db_users values('Elkszero','Elkszero','4F8F66946DFD8C176DC6BECF51B54A15','15895261466@163.com',15895261466,NULL)
+insert into db_users values('Elkszero','Elkszero','25F9E794323B453885F5181F1B624D0B','15895261466@163.com',15895261466,NULL)
 insert into db_authorizations values(1,1,1,1,1,1,1)
-
+--管理员：Elkszero 默认密码为：123456789
 
 
 
