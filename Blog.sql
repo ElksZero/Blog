@@ -1,77 +1,78 @@
+CREATE DATEBASE Blog;
 USE Blog;
---ÓÃ»§±í
+--ç”¨æˆ·è¡¨
 CREATE TABLE db_users (
-  id INT NOT NULL IDENTITY(1,1),--id:×ÔÔö
-  username NVARCHAR(50) NOT NULL,--ÓÃ»§Ãû
-  nickname NVARCHAR(50) NOT NULL,--ÓÃ»§êÇ³Æ
-  password NVARCHAR(255) NOT NULL,--¼ÓÃÜÃÜÂë
-  email NVARCHAR(50) DEFAULT NULL,--µç×ÓÓÊÏä
-  mobile_num NVARCHAR(20) DEFAULT NULL,--ÊÖ»úºÅÂë
-  register_date DATETIME DEFAULT NULL,--×¢²áÊ±¼ä
+  id INT NOT NULL IDENTITY(1,1),--id:è‡ªå¢
+  username NVARCHAR(50) NOT NULL,--ç”¨æˆ·å
+  nickname NVARCHAR(50) NOT NULL,--ç”¨æˆ·æ˜µç§°
+  password NVARCHAR(255) NOT NULL,--åŠ å¯†å¯†ç 
+  email NVARCHAR(50) DEFAULT NULL,--ç”µå­é‚®ç®±
+  mobile_num NVARCHAR(20) DEFAULT NULL,--æ‰‹æœºå·ç 
+  register_date DATETIME DEFAULT NULL,--æ³¨å†Œæ—¶é—´
   PRIMARY KEY (id)
 ) 
---È¨ÏŞ±í
+--æƒé™è¡¨
 CREATE TABLE db_authorizations (
-  user_id INT NOT NULL,--ÓÃ»§id¼æÖ÷¼ü
-  write INT DEFAULT 0,--Ğ´ÎÄÕÂµÄÈ¨ÏŞ
-  comment  INT DEFAULT 0,--Ğ´ÆÀÂÛµÄÈ¨ÏŞ
-  labelSet INT DEFAULT 0,--±êÇ©¹ÜÀíÈ¨ÏŞ
-  typeSet INT DEFAULT 0,--Àà±ğ¹ÜÀíÈ¨ÏŞ
-  articleSet INT DEFAULT 0,--ÎÄÕÂ¹ÜÀíÈ¨ÏŞ
-  commentSet INT DEFAULT 0,--ÆÀÂÛ¹ÜÀíÈ¨ÏŞ
-  userSet INT DEFAULT 0,--ÓÃ»§¹ÜÀíÈ¨ÏŞ
+  user_id INT NOT NULL,--ç”¨æˆ·idå…¼ä¸»é”®
+  write INT DEFAULT 0,--å†™æ–‡ç« çš„æƒé™
+  comment  INT DEFAULT 0,--å†™è¯„è®ºçš„æƒé™
+  labelSet INT DEFAULT 0,--æ ‡ç­¾ç®¡ç†æƒé™
+  typeSet INT DEFAULT 0,--ç±»åˆ«ç®¡ç†æƒé™
+  articleSet INT DEFAULT 0,--æ–‡ç« ç®¡ç†æƒé™
+  commentSet INT DEFAULT 0,--è¯„è®ºç®¡ç†æƒé™
+  userSet INT DEFAULT 0,--ç”¨æˆ·ç®¡ç†æƒé™
   PRIMARY KEY (user_id),
   FOREIGN KEY(user_id) REFERENCES  db_users(id)
 ) 
---·ÖÀà±í
+--åˆ†ç±»è¡¨
 CREATE TABLE db_types(
-  id INT NOT NULL IDENTITY(1,1),--id:×ÔÔö
-  name NVARCHAR(50) NOT NULL,--·ÖÀàÃû³Æ
-  describe NVARCHAR(255) DEFAULT NULL,--·ÖÀàÃèÊö
+  id INT NOT NULL IDENTITY(1,1),--id:è‡ªå¢
+  name NVARCHAR(50) NOT NULL,--åˆ†ç±»åç§°
+  describe NVARCHAR(255) DEFAULT NULL,--åˆ†ç±»æè¿°
   PRIMARY KEY(id)
 )
---±êÇ©±í
+--æ ‡ç­¾è¡¨
 CREATE TABLE db_labels(
-  id INT NOT NULL IDENTITY(1,1),--id:×ÔÔö
-  name NVARCHAR(50) NOT NULL --±êÇ©Ãû³Æ
+  id INT NOT NULL IDENTITY(1,1),--id:è‡ªå¢
+  name NVARCHAR(50) NOT NULL --æ ‡ç­¾åç§°
   PRIMARY KEY(id)
 )
---ÎÄÕÂ±í
+--æ–‡ç« è¡¨
 CREATE TABLE db_articles(
-  id INT NOT NULL IDENTITY(1,1),--id:×ÔÔö
-  title NVARCHAR(50) NOT NULL,--ÎÄÕÂ±êÌâ
-  type_id INT,--ÎÄÕÂÀà±ğ
-  author_id INT,--·¢±íÓÃ»§£º×÷Õß
-  status INT NOT NULL DEFAULT 0,--ÎÄÕÂµ±Ç°×´Ì¬
-  content NVARCHAR(MAX),--ÎÄÕÂÄÚÈİ
-  createDate DATETIME,--´´½¨Ê±¼ä
-  updateDate DATETIME,--×î½ü¸üĞÂÊ±¼ä
-  publishDate DATETIME,--·¢²¼Ê±¼ä
-  checker_id INT--ÉóºËÔ±
+  id INT NOT NULL IDENTITY(1,1),--id:è‡ªå¢
+  title NVARCHAR(50) NOT NULL,--æ–‡ç« æ ‡é¢˜
+  type_id INT,--æ–‡ç« ç±»åˆ«
+  author_id INT,--å‘è¡¨ç”¨æˆ·ï¼šä½œè€…
+  status INT NOT NULL DEFAULT 0,--æ–‡ç« å½“å‰çŠ¶æ€
+  content NVARCHAR(MAX),--æ–‡ç« å†…å®¹
+  createDate DATETIME,--åˆ›å»ºæ—¶é—´
+  updateDate DATETIME,--æœ€è¿‘æ›´æ–°æ—¶é—´
+  publishDate DATETIME,--å‘å¸ƒæ—¶é—´
+  checker_id INT--å®¡æ ¸å‘˜
   PRIMARY KEY(id),
   FOREIGN KEY(type_id) REFERENCES  db_types(id),
   FOREIGN KEY(author_id) REFERENCES  db_users(id),
   FOREIGN KEY(checker_id) REFERENCES  db_users(id)
 )
---ÎÄÕÂ±êÇ©¹ØÏµ±í
+--æ–‡ç« æ ‡ç­¾å…³ç³»è¡¨
 CREATE TABLE db_article_label(
-  id INT NOT NULL IDENTITY(1,1),--id:×ÔÔö
-  article_id INT NOT NULL,--ÎÄÕÂid
-  label_id INT NOT NULL,--±êÇ©id
+  id INT NOT NULL IDENTITY(1,1),--id:è‡ªå¢
+  article_id INT NOT NULL,--æ–‡ç« id
+  label_id INT NOT NULL,--æ ‡ç­¾id
   PRIMARY KEY(id),
   FOREIGN KEY(article_id) REFERENCES  db_articles(id),
   FOREIGN KEY(label_id) REFERENCES  db_labels(id)
 )
---ÆÀÂÛ±í
+--è¯„è®ºè¡¨
 CREATE TABLE db_comments(
-  id INT NOT NULL IDENTITY(1,1),--id:×ÔÔö
-  article_id INT NOT NULL,--ÎÄÕÂid
-  commenter_id INT NOT NULL,--ÆÀÂÛÓÃ»§
-  content NVARCHAR(150),--ÆÀÂÛÄÚÈİ
-  status INT NOT NULL DEFAULT 0,--ÆÀÂÛµ±Ç°×´Ì¬
-  submitDate DATETIME,--Ìá½»Ê±¼ä
-  publishDate DATETIME,--·¢²¼Ê±¼ä
-  checker_id INT--ÉóºËÔ±£¬
+  id INT NOT NULL IDENTITY(1,1),--id:è‡ªå¢
+  article_id INT NOT NULL,--æ–‡ç« id
+  commenter_id INT NOT NULL,--è¯„è®ºç”¨æˆ·
+  content NVARCHAR(150),--è¯„è®ºå†…å®¹
+  status INT NOT NULL DEFAULT 0,--è¯„è®ºå½“å‰çŠ¶æ€
+  submitDate DATETIME,--æäº¤æ—¶é—´
+  publishDate DATETIME,--å‘å¸ƒæ—¶é—´
+  checker_id INT--å®¡æ ¸å‘˜ï¼Œ
   PRIMARY KEY(id),
   FOREIGN KEY(article_id) REFERENCES  db_articles(id),
   FOREIGN KEY(checker_id) REFERENCES  db_users(id)
