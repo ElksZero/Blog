@@ -6,9 +6,9 @@
 ### 部署
 1. 环境：JDK1.8+SQLServer2012
 2. 数据库：
-  * 执行Blog.sql文件
-  * 为数据库Blog创建用户
-  * 在conf/db.properties中配置数据库连接信息
+   * 执行Blog.sql文件
+   * 为数据库Blog创建用户
+   * 在conf/db.properties中配置数据库连接信息
 3. 服务器软件：Tomcat 8.5
 
 ### 迁移
