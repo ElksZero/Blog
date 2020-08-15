@@ -42,6 +42,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="paging_queryForArticle" resultType="cn.morebug.blog.bean.CommentVo">
 		select c.* ,a.title article_title,u.username commenter_username
 		from db_comments c,db_articles a,db_users u 
-		where c.article_id = a.id and c.commenter_id = u.id and c.status = 1 and c.article_id = #{article_id} order by c.submitDate asc
+		where c.article_id = a.id and c.commenter_id = u.id and c.status = 1 and c.article_id = #{article_id} order by c.submitDate asc 
 	</select>
 </mapper>
