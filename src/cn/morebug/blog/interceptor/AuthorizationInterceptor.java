@@ -65,7 +65,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor{
 		if(userVo.getAuthorization().getUserSet() != 1 && requestURI.contains("articleCommentsManage")) {
 			flag = false;
 		}
-		if(flag = false) {
+		if(!flag) {
 			request.getRequestDispatcher("/nopass").forward(request, response);
 			return flag;
 		}
